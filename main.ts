@@ -1,17 +1,13 @@
 /*
   1. Se om du kan hitta två stycken code smells i följande funktion och rätta till dem.
-  Funktionen tar emot en lista med längshoppslängder och syftet med funktionen är att summera
+  Funktionen tar emot en lista med längdhoppslängder och syftet med funktionen är att summera
   dessa hopplängder.
   */
 
   function getLength(jumpings: number[]): number {
-    let totalNumber = 0;
-  
-    totalNumber = jumpings.reduce(
+    return jumpings.reduce(
       (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
     );
-  
-    return totalNumber;
   }
   
   /*
