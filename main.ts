@@ -5,9 +5,7 @@
   */
 
   function getLength(jumpings: number[]): number {
-    return jumpings.reduce(
-      (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
-    );
+    return jumpings.reduce((jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump, 0);
   }
   
   /*
@@ -18,23 +16,11 @@
     constructor(
       public name: string,
       public handedInOnTime: boolean,
-      public passed: boolean
     ) {}
   }
   
   function getStudentStatus(student: Student): string {
-    student.passed =
-      student.name == "Sebastian"
-        ? student.handedInOnTime
-          ? true
-          : false
-        : false;
-  
-    if (student.passed) {
-      return "VG";
-    } else {
-      return "IG";
-    }
+    return student.name === "Sebastian" && student.handedInOnTime ? "VG" : "IG";
   }
   
   /*
