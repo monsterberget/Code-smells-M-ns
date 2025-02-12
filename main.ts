@@ -28,23 +28,20 @@
     Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
     */
   
-  class Temp {
-    constructor(public q: string, public where: Date, public v: number) {}
-  }
-  
-  function averageWeeklyTemperature(heights: Temp[]) {
-    let r = 0;
-  
-    for (let who = 0; who < heights.length; who++) {
-      if (heights[who].q === "Stockholm") {
-        if (heights[who].where.getTime() > Date.now() - 604800000) {
-          r += heights[who].v;
-        }
-      }
+    class TemperatureData {
+      constructor(public city: string, public date: Date, public temperature: number) {}
     }
-  
-    return r / 7;
-  }
+    
+    function averageWeeklyTemperature(records: TemperatureData[]): number {
+      const oneWeekAgo = Date.now() - 604800000;
+      const filteredRecords = records.filter(record => record.city === "Stockholm" && record.date.getTime() > oneWeekAgo);
+      if (filteredRecords.length === 0) {
+        return 0;
+      }
+    
+      const totalTemperature = filteredRecords.reduce((sum, record) => sum + record.temperature, 0);
+      return totalTemperature / filteredRecords.length;
+    }
   
   /*
     4. Följande funktion kommer att presentera ett objekt i dom:en. 
