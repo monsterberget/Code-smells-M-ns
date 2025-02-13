@@ -56,6 +56,11 @@
     description: string,
     image: string,
   }
+  // med hjälp av gpt fick jag två olika versioner hur man kunde skriva nästföljande stycke.
+  // dels en som är säkrare och fungerar bättre och en som är mindre kod men är mer osäker.
+  // skulle vara jättetacksam om du kunde komma med feedback hur man ska tänka, snabbt och enkelt eller "bättre" men längre.
+  // med tanke på DRY och KISS i åtanke.
+
   function showProduct(product:Product, parent: HTMLElement) {
     const {name, price, image, amount, description} = product;
 
@@ -78,50 +83,45 @@
     parent.appendChild(container);
 
   }
-
-    let container = document.createElement("div");
-    let title = document.createElement("h4");
-    let pris = document.createElement("strong");
-    let imageTag = document.createElement("img");
-  
-    title.innerHTML = name;
-    pris.innerHTML = price.toString();
-    imageTag.src = image;
-  
-    container.appendChild(title);
-    container.appendChild(imageTag);
-    container.appendChild(pris);
-    parent.appendChild(container);
+  // andra koden
+  interface Product {
+    name: string;
+    price: number;
+    amount: number;
+    description: string;
+    image: string;
   }
+
+  function showProduct2(product: Product, parent: HTMLElement) {
+    parent.innerHTML += `
+      <div>
+        <h4>${product.name}</h4>
+        <img src="${product.image}" alt="${product.name}">
+        <strong>Pris: ${product.price} kr</strong>
+        <p>${product.description}</p>
+        <p>I lager: ${product.amount} st</p>
+      </div>`;
+  }
+  
   
   /*
     5. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
     går att göra betydligt bättre. Gör om så många som du kan hitta!
     */
+
   function presentStudents(students: Student[]) {
-    for (const student of students) {
-      if (student.handedInOnTime) {
-        let container = document.createElement("div");
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = true;
-  
-        container.appendChild(checkbox);
-        let listOfStudents = document.querySelector("ul#passedstudents");
-        listOfStudents?.appendChild(container);
-      } else {
-        let container = document.createElement("div");
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = false;
-  
-        container.appendChild(checkbox);
-        let listOfStudents = document.querySelector("ul#failedstudents");
-        listOfStudents?.appendChild(container);
-      }
-    }
+    students.forEach(student => {
+      const container = document.createElement("div");
+      const checkbox = document.createElement("input");
+
+      checkbox.type = "checkbox";
+      checkbox.checked = student.handedInOnTime;
+
+      container.appendChild(checkbox);
+      document.querySelector(student.handedInOnTime ? "ul#passedstudents" : "ul#failedstudents")
+      ?.appendChild(container);
+    });
   }
-  
   /*
     6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
     Lorem, ipsum, dolor, sit, amet
