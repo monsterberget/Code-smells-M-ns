@@ -42,20 +42,43 @@
       const totalTemperature = filteredRecords.reduce((sum, record) => sum + record.temperature, 0);
       return totalTemperature / filteredRecords.length;
     }
-  
+
+    
   /*
     4. Följande funktion kommer att presentera ett objekt i dom:en. 
     Se om du kan göra det bättre. Inte bara presentationen räknas, även strukturer.
     */
   
-  function showProduct(
+  interface Product {
     name: string,
     price: number,
     amount: number,
     description: string,
     image: string,
-    parent: HTMLElement
-  ) {
+  }
+  function showProduct(product:Product, parent: HTMLElement) {
+    const {name, price, image, amount, description} = product;
+
+    const container = document.createElement("div");
+    container.classList.add("product");
+    const title = document.createElement("h4");
+    title.textContent = name;
+    const pricetag = document.createElement("strong");
+    pricetag.textContent = `${price} SEK`;
+    const stockInfo = document.createElement("p");
+    stockInfo.textContent = amount > 0 ? `In stock: ${amount}` : "Out of stock";
+    stockInfo.classList.add(amount > 0 ? "in-stock" : "out-of-stock");
+    const descTag = document.createElement("p");
+    descTag.textContent = description;
+    const imageTag = document.createElement("img");
+    imageTag.src = image;
+    imageTag.alt = `image of ${name}`;
+
+    container.append(title, imageTag, pricetag, stockInfo, descTag);
+    parent.appendChild(container);
+
+  }
+
     let container = document.createElement("div");
     let title = document.createElement("h4");
     let pris = document.createElement("strong");
